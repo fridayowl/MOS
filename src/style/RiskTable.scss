@@ -1,17 +1,23 @@
 .risk-table {
   width: 100%;
   border-collapse: collapse;
+  border: #f0f0f0;
 
   th,
   td {
     padding: 10px;
     border: 1px solid #ccc;
+    font-size: 10px;
+    
   }
 
   th {
+    font-size: 12px;
     background-color: #f0f0f0;
     font-weight: bold;
     text-align: left;
+    background-color: rgb(198, 223, 255);
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
   }
 
   tbody tr:nth-child(even) {

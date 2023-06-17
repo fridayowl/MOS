@@ -60,9 +60,6 @@ const Test = () => {
       ]);
     }
   }, []);
-
- 
-
   return (
     <div>
       <h1>Risk Table</h1> 
