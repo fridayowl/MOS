@@ -1,0 +1,47 @@
+.risk-table {
+  width: 75%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.risk-table th {
+  background-color: #f0f6fa;
+  color: #3e86c8;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #d4dfe6;
+  text-align: center;
+}
+
+.risk-table td {
+  font-size: 10px;
+  padding: 8px;
+  border: 1px solid #d4dfe6;
+}
+
+.risk-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.risk-table tbody tr:hover {
+  background-color: #e5e5e5;
+}
+
+
+.select-dropdown {
+  border: none;
+  font-size: 10px;
+  padding: 5px; 
+   
+}
+
+.select-dropdown option {
+  font-size: 12px;
+}
+.select-dropdown:focus {
+  outline: none;
+  border: none;
+}
