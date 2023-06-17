@@ -104,7 +104,9 @@ const Table = () => {
         case "LikelihoodOfRiskOccurrence" :
         updatedTableData[index].RiskAssessment.LikelihoodOfRiskOccurrence = event.target.value;
         break ;
-
+        case "ImpactOnCIA":
+        updatedTableData[index].RiskAssessment.ImpactOnCIA= event.target.value;  
+        break;    
         default:
         break;
    
