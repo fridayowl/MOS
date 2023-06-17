@@ -8,6 +8,7 @@ const Table = () => {
   const riskDomains = ["Domain1", "Domain2", "Domain3"];
   const riskOccurrence=["UnLikely","Very Likely","Could Happen"]
   const impactOnCIA =["High","Medium","Low"]
+  const existingcontrolControlType=["Manual" ,"Automated"]
   const [tableData, setTableData] = useState([
     // Dummy row data
     {
@@ -30,8 +31,11 @@ const Table = () => {
         NatureOfControl: "Awareness",
         ResidualRiskSeverity: "High",
         RiskTreatment: "Transfer",
-        ISO27001Mapping: "A.7.1.1 Screening",
-        PlannedControls: "Effective 1st May Interns will be added for BGV"
+        ISO27001Mapping: "A.7.1.1 Screening", 
+        PlannedControls: "Effective 1st May Interns will be added for BGV",    
+        PlannedControlType: "Manual",
+        PlannedNatureOfControl: "Preventive",
+        ResidualRiskValueAfterPlannedControl: "#REF!",
       },
       RiskMonitoring: {
         ControlType: "Manual",
@@ -63,12 +67,12 @@ const Table = () => {
         ResidualRiskSeverity: "High",
         RiskTreatment: "Transfer",
         ISO27001Mapping: "A.7.1.1 Screening",
-        PlannedControls: "Effective 1st May Interns will be added for BGV"
+        PlannedControls: "Effective 1st May Interns will be added for BGV",    
+        PlannedControlType: "Manual",
+        PlannedNatureOfControl: "Preventive",
+        ResidualRiskValueAfterPlannedControl: "#REF!",
       },
       RiskMonitoring: {
-        ControlType: "Manual",
-        NatureOfControl: "Preventive",
-        ResidualRiskValueAfterPlannedControl: "#REF!",
         ExpectedClosedDate: "10 May 22",
         RiskStatus: "Managed",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
@@ -90,8 +94,8 @@ const Table = () => {
   };
 
   const assessmentColSpan = showAssessment ? 4 : 0;
-  const controlColSpan = showControl ? 7 : 0;
-  const monitoringColSpan = showMonitoring ? 6 : 0;
+  const controlColSpan = showControl ? 11 : 0;
+  const monitoringColSpan = showMonitoring ? 3 : 0;
 
  
 
@@ -106,6 +110,9 @@ const Table = () => {
         break ;
         case "ImpactOnCIA":
         updatedTableData[index].RiskAssessment.ImpactOnCIA= event.target.value;  
+        break;    
+        case "ExisitngControlType":
+        updatedTableData[index].RiskControl.ControlType= event.target.value;  
         break;    
         default:
         break;
@@ -160,6 +167,9 @@ const Table = () => {
                 <th>Risk Treatment</th>
                 <th>ISO 27001 Mapping</th>
                 <th>Planned Controls</th>
+                <th>PlannedControlType</th> 
+                <th>PlannedNatureOfControl</th>
+                <th>ResidualRiskValueAfterPlannedControl</th>
               </>
             )}
             {showMonitoring && (
@@ -221,13 +231,27 @@ const Table = () => {
               )}
               {showControl && (
                 <>
-                  <td>{data.RiskControl.ExistingControls}</td>
-                  <td>{data.RiskControl.ControlType}</td>
+                  <td>{data.RiskControl.ExistingControls}</td> 
+                   <td>
+                    <select
+                   value={data.RiskControl.ControlType}
+                   className="select-dropdown"
+                   onChange={(event) => handleRiskChange(event, index,"ExisitngControlType")}>
+                    {existingcontrolControlType.map((exisitngcontroltype, index) => (
+                        <option key={index} value={exisitngcontroltype}>
+                        {exisitngcontroltype}
+                        </option>
+                    ))}
+                     </select>
+                  </td>
                   <td>{data.RiskControl.NatureOfControl}</td>
                   <td>{data.RiskControl.ResidualRiskSeverity}</td>
                   <td>{data.RiskControl.RiskTreatment}</td>
                   <td>{data.RiskControl.ISO27001Mapping}</td>
                   <td>{data.RiskControl.PlannedControls}</td>
+                  <td>{data.RiskControl.PlannedControlType}</td>
+                  <td>{data.RiskControl.PlannedNatureOfControl}</td>
+                  <td>{data.RiskControl.ResidualRiskValueAfterPlannedControl}</td>
                 </>
               )}
               {showMonitoring && (
