@@ -94,7 +94,7 @@ const Table = () => {
   };
 
   const assessmentColSpan = showAssessment ? 4 : 0;
-  const controlColSpan = showControl ? 11 : 0;
+  const controlColSpan = showControl ? 10 : 0;
   const monitoringColSpan = showMonitoring ? 3 : 0;
 
  
@@ -167,9 +167,9 @@ const Table = () => {
                 <th>Risk Treatment</th>
                 <th>ISO 27001 Mapping</th>
                 <th>Planned Controls</th>
-                <th>PlannedControlType</th> 
-                <th>PlannedNatureOfControl</th>
-                <th>ResidualRiskValueAfterPlannedControl</th>
+                <th>Planned Control Type</th> 
+                <th>Planned Nature Of Control</th>
+                <th>RiskValue After Planned Control</th>
               </>
             )}
             {showMonitoring && (
