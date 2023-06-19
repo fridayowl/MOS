@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Table.css';
 import './style.css';
- import DatePickerButton from  'Components/Datepicker'
+import DatePickerButton from  'Components/Datepicker'
+import TextEditor from 'Components/TextEditor';
 
 const HR_RiskTable = ({ risk }) => {
 
@@ -90,200 +91,227 @@ const HR_RiskTable = ({ risk }) => {
     return risks.map((risk, index) => (
       <React.Fragment key={index}>
 <tr>
-  {Object.entries(risk[header]).map(([key, value], innerIndex) => (
-    <td key={innerIndex}>
-      {key === 'RiskDomain' ? (
-        <select
-          className="select-dropdown"
-          value={value}
-          onChange={(e) => handleChange(index, e.target.value, "RiskDomain")}
-        >
-          {riskDomains.map((domain) => (
-            <option key={domain} value={domain}>
-              {domain}
-            </option>
-          ))}
-        </select>
-      ) : key === 'RiskIdentificationDate' ? (
-         <DatePickerButton defaultDate={value} setRisks={setRisks} risks={risks} index={index} type="RiskIdentificationDate" />
-      ) : (
-        value
-      )}
-    </td>
-  ))}
-  <td>
-    <button onClick={() => handleButtonClick(index)}>Expand</button>
+ {Object.entries(risk[header]).map(([key, value], innerIndex) => (
+  <td key={innerIndex}>
+    {key === 'RiskDomain' ? (
+      <select
+        className="select-dropdown"
+        value={value}
+        onChange={(e) => handleChange(index, e.target.value, 'RiskDomain')}
+      >
+        {riskDomains.map((domain) => (
+          <option key={domain} value={domain}>
+            {domain}
+          </option>
+        ))}
+      </select>
+    ) : key === 'RiskIdentificationDate' ? (
+      <DatePickerButton
+        defaultDate={value}
+        setRisks={setRisks}
+        risks={risks}
+        index={index}
+        type="RiskIdentificationDate"
+      />
+    ) : key === 'RiskStatement' || key === 'RiskOwner' ? (
+        <TextEditor defaultData={value} setRisks={setRisks} risks={risks} index={index} type={key}/>
+    ) : (
+      value
+    )}
   </td>
+))}
+<td>
+  <button onClick={() => handleButtonClick(index)}>Expand</button>
+</td>
+
 </tr>
 
   {expandedRisk === index && (
   <tr className="expanded-row">
-    <td colSpan={Object.keys(risk[header]).length + 1}>
-      <table className="sub-table">
-        <thead>
-          <tr>{getTableHeaders('RiskAssessment', false).slice(0, -1)}</tr>
-        </thead>
-        <tbody>
-          <tr>
-            {Object.entries(risk.RiskAssessment).map(([key, value], innerindex1) => (
-              <td key={innerindex1}>
-                {key === 'LikelihoodOfRiskOccurrence' ? (
-                  <select
-                    className="select-dropdown"
-                    value={value}
-                    onChange={(e) =>
-                      handleChange(index, e.target.value, 'LikelihoodOfRiskOccurrence')
-                    }
-                  >
-                    {riskOccurrence.map((ocuurance) => (
-                      <option key={ocuurance} value={ocuurance}>
-                        {ocuurance}
-                      </option>
-                    ))}
-                  </select>
-                ) : key === 'ImpactOnCIA' ? (
-                  <select
-                    className="select-dropdown"
-                    value={value}
-                    onChange={(e) => handleChange(index, e.target.value, 'ImpactOnCIA')}
-                  >
-                    {impactOnCIA.map((impact) => (
-                      <option key={impact} value={impact}>
-                        {impact}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  value
-                )}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-    </td>
+  <td colSpan={Object.keys(risk[header]).length + 1}>
+  <table className="sub-table">
+    <thead>
+      <tr>{getTableHeaders('RiskAssessment', false).slice(0, -1)}</tr>
+    </thead>
+    <tbody>
+      <tr>
+        {Object.entries(risk.RiskAssessment).map(([key, value], innerindex1) => (
+          <td key={innerindex1}>
+            {key === 'LikelihoodOfRiskOccurrence' ? (
+              <select
+                className="select-dropdown"
+                value={value}
+                onChange={(e) =>
+                  handleChange(index, e.target.value, 'LikelihoodOfRiskOccurrence')
+                }
+              >
+                {riskOccurrence.map((ocuurance) => (
+                  <option key={ocuurance} value={ocuurance}>
+                    {ocuurance}
+                  </option>
+                ))}
+              </select>
+            ) : key === 'ImpactOnCIA' ? (
+              <select
+                className="select-dropdown"
+                value={value}
+                onChange={(e) => handleChange(index, e.target.value, 'ImpactOnCIA')}
+              >
+                {impactOnCIA.map((impact) => (
+                  <option key={impact} value={impact}>
+                    {impact}
+                  </option>
+                ))}
+              </select>
+            ) : key === 'RiskConsequences' ? (
+               <TextEditor defaultData={value} setRisks={setRisks} risks={risks} index={index} type={key}/>
+              
+            ) : (
+              value
+            )}
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+</td>
+
   </tr>
 )}
 {expandedRisk === index && (
   <tr className="expanded-row">
-    <td colSpan={Object.keys(risk[header]).length + 1}>
-      <table className="sub-table">
-        <thead>
-          <tr>{getTableHeaders('RiskExitingControl', false).slice(0, -1)}</tr>
-        </thead>
-        <tbody>
-          <tr>
-            {Object.entries(risk.RiskExitingControl).map(([key, value], innerindex1) => (
-              <td key={innerindex1}>
-                {key === 'ControlType' || key === 'NatureOfControl' || key === 'RiskTreatment' ? (
-                  <select
-                    className="select-dropdown"
-                    value={value}
-                    onChange={(e) => handleChange(index, e.target.value, "Exisiting"+key)}
-                  >
-                    {key === 'ControlType' && existingcontrolControlType.map((controlType) => (
-                      <option key={controlType} value={controlType}>
-                        {controlType}
-                      </option>
-                    ))}
-                    {key === 'NatureOfControl' && existingnatureOfControlOptions.map((controlOption) => (
-                      <option key={controlOption} value={controlOption}>
-                        {controlOption}
-                      </option>
-                    ))}
-                    {key === 'RiskTreatment' && existingriskTreatmentOptions.map((treatmentOption) => (
-                      <option key={treatmentOption} value={treatmentOption}>
-                        {treatmentOption}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  value
-                )}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-    </td>
+  <td colSpan={Object.keys(risk[header]).length + 1}>
+  <table className="sub-table">
+    <thead>
+      <tr>{getTableHeaders('RiskExitingControl', false).slice(0, -1)}</tr>
+    </thead>
+    <tbody>
+      <tr>
+        {Object.entries(risk.RiskExitingControl).map(([key, value], innerindex1) => (
+          <td key={innerindex1}>
+            {key === 'ControlType' || key === 'NatureOfControl' || key === 'RiskTreatment' ? (
+              <select
+                className="select-dropdown"
+                value={value}
+                onChange={(e) => handleChange(index, e.target.value, "Exisiting"+key)}
+              >
+                {key === 'ControlType' && existingcontrolControlType.map((controlType) => (
+                  <option key={controlType} value={controlType}>
+                    {controlType}
+                  </option>
+                ))}
+                {key === 'NatureOfControl' && existingnatureOfControlOptions.map((controlOption) => (
+                  <option key={controlOption} value={controlOption}>
+                    {controlOption}
+                  </option>
+                ))}
+                {key === 'RiskTreatment' && existingriskTreatmentOptions.map((treatmentOption) => (
+                  <option key={treatmentOption} value={treatmentOption}>
+                    {treatmentOption}
+                  </option>
+                ))}
+              </select>
+            ) : key === 'ExistingControls' || key === 'ISO27001Mapping' ? (
+              
+                <TextEditor defaultData={value} setRisks={setRisks} risks={risks} index={index} type={key}/>
+             
+            ) : (
+              value
+            )}
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+</td>
+
   </tr>
 )}
 
 {expandedRisk === index && (
   <tr className="expanded-row">
-    <td colSpan={Object.keys(risk[header]).length + 1}>
-      <table className="sub-table">
-        <thead>
-          <tr>{getTableHeaders('RiskPlannedControls', false).slice(0, -1)}</tr>
-        </thead>
-        <tbody>
-          <tr>
-            {Object.entries(risk.RiskPlannedControls).map(([key, value], innerindex1) => (
-              <td key={innerindex1}>
-                {key === 'PlannedControlType' || key === 'PlannedNatureOfControl' ? (
-                  <select
-                    className="select-dropdown"
-                    value={value}
-                    onChange={(e) => handleChange(index, e.target.value, key)}
-                  >
-                    {key === 'PlannedControlType' && plannedcontrolControlType.map((controlType) => (
-                      <option key={controlType} value={controlType}>
-                        {controlType}
-                      </option>
-                    ))}
-                    {key === 'PlannedNatureOfControl' && plannednatureOfControlOptions.map((controlOption) => (
-                      <option key={controlOption} value={controlOption}>
-                        {controlOption}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  value
-                )}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-    </td>
+ <td colSpan={Object.keys(risk[header]).length + 1}>
+  <table className="sub-table">
+    <thead>
+      <tr>{getTableHeaders('RiskPlannedControls', false).slice(0, -1)}</tr>
+    </thead>
+    <tbody>
+      <tr>
+        {Object.entries(risk.RiskPlannedControls).map(([key, value], innerindex1) => (
+          <td key={innerindex1}>
+            {key === 'PlannedControlType' || key === 'PlannedNatureOfControl' ? (
+              <select
+                className="select-dropdown"
+                value={value}
+                onChange={(e) => handleChange(index, e.target.value, key)}
+              >
+                {key === 'PlannedControlType' && plannedcontrolControlType.map((controlType) => (
+                  <option key={controlType} value={controlType}>
+                    {controlType}
+                  </option>
+                ))}
+                {key === 'PlannedNatureOfControl' && plannednatureOfControlOptions.map((controlOption) => (
+                  <option key={controlOption} value={controlOption}>
+                    {controlOption}
+                  </option>
+                ))}
+              </select>
+            ) : key === 'PlannedControls' ? (
+               
+                 <TextEditor defaultData={value} setRisks={setRisks} risks={risks} index={index} type={key}/>
+             
+            ) : (
+              value
+            )}
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+</td>
+
   </tr>
 )}
 
  {expandedRisk === index && (
   <tr className="expanded-row">
-    <td colSpan={Object.keys(risk[header]).length + 1}>
-      <table className="sub-table">
-        <thead>
-          <tr>{getTableHeaders('RiskMonitoring', false).slice(0, -1)}</tr>
-        </thead>
-        <tbody>
-          <tr>
-            {Object.entries(risk.RiskMonitoring).map(([key, value], innerindex1) => (
-              <td key={innerindex1}>
-                {key === 'RiskStatus' ? (
-                  <select
-                    className="select-dropdown"
-                    value={value}
-                    onChange={(e) => handleChange(index, e.target.value, key)}
-                  >
-                    {riskStatus.map((status) => (
-                      <option key={status} value={status}>
-                        {status}
-                      </option>
-                    ))}
-                  </select>
-                ) : key === 'ExpectedClosedDate' ? (
-                 <DatePickerButton defaultDate={value} setRisks={setRisks} risks={risks} index={index} type="ExpectedClosedDate"  />
-                ) : (
-                  value
-                )}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-      <button onClick={handleCloseButtonClick}>Close</button>
-    </td>
+  <td colSpan={Object.keys(risk[header]).length + 1}>
+  <table className="sub-table">
+    <thead>
+      <tr>{getTableHeaders('RiskMonitoring', false).slice(0, -1)}</tr>
+    </thead>
+    <tbody>
+      <tr>
+        {Object.entries(risk.RiskMonitoring).map(([key, value], innerindex1) => (
+          <td key={innerindex1}>
+            {key === 'RiskStatus' ? (
+              <select
+                className="select-dropdown"
+                value={value}
+                onChange={(e) => handleChange(index, e.target.value, key)}
+              >
+                {riskStatus.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            ) : key === 'ExpectedClosedDate' ? (
+              <DatePickerButton defaultDate={value} setRisks={setRisks} risks={risks} index={index} type="ExpectedClosedDate" />
+            ) : key === 'Remarks' ? (
+               <TextEditor defaultData={value} setRisks={setRisks} risks={risks} index={index} type={key}/>
+             
+            ) : (
+              value
+            )}
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+  <button onClick={handleCloseButtonClick}>Close</button>
+</td>
+
   </tr>
 )}
 

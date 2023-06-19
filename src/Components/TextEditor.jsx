@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const TextEditor = () => {
+const TextEditor = ({ defaultData, setRisks, risks, index, type }) => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
-  const [labelText, setLabelText] = useState('Click Here!');
+  const [labelText, setLabelText] = useState(defaultData);
   const dialogRef = useRef(null);
 
   const handleLabelClick = (e) => {
@@ -19,6 +19,30 @@ const TextEditor = () => {
   const handleSaveCloseClick = () => {
     setLabelText(text);
     setOpen(false);
+    const updatedRisks = [...risks];
+    switch (type) {
+      case 'RiskOwner':
+        updatedRisks[index].RiskIdentification.RiskOwner = text;
+        break;
+      case 'RiskStatement':
+        updatedRisks[index].RiskIdentification.RiskStatement = text;
+        break;
+      case 'ExistingControls':
+        updatedRisks[index].RiskExitingControl.ExistingControls = text;
+        break;
+     case 'ISO27001Mapping':
+        updatedRisks[index].RiskExitingControl.ISO27001Mapping = text;
+        break;
+        case "PlannedControls" :
+        updatedRisks[index].RiskPlannedControls.PlannedControls= text;
+        break ; 
+        case  "Remarks":
+        updatedRisks[index].RiskMonitoring.Remarks=text
+        break ;      
+      default:
+        break;
+    }
+    setRisks(updatedRisks);
   };
 
   const handleClickOutside = (e) => {
@@ -49,15 +73,17 @@ const TextEditor = () => {
 
       {open && (
         <div className="dialog" ref={dialogRef}>
-          <h2>Text Editor</h2>
-          <input
-            type="text"
+          <h2>{type}</h2>
+          <textarea
             value={text}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             autoFocus
-          />
-          <button onClick={handleSaveCloseClick}>Save/Close</button>
+            style={{ height: 'auto' }}
+          ></textarea>
+          <div className="button-container">
+            <button onClick={handleSaveCloseClick}>Save/Close</button>
+          </div>
         </div>
       )}
 
@@ -74,10 +100,11 @@ const TextEditor = () => {
           border-radius: 4px;
           width: 300px;
           max-width: 100%;
+          border-radius: 4px;
           font-family: Arial, sans-serif;
         }
 
-        .dialog input[type="text"] {
+        .dialog textarea {
           width: 100%;
           padding: 8px;
           border: 1px solid #e0e0e0;
@@ -85,6 +112,14 @@ const TextEditor = () => {
           margin-bottom: 16px;
           font-size: 14px;
           outline: none;
+          resize: vertical; /* Allow vertical resizing of textarea */
+          height: auto; /* Set initial height to auto */
+          overflow: auto; /* Enable vertical scrolling if needed */
+        }
+
+        .dialog .button-container {
+          display: flex;
+          justify-content: flex-end;
         }
 
         .dialog button {
