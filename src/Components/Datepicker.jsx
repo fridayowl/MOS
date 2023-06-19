@@ -5,34 +5,28 @@ import 'react-datepicker/dist/react-datepicker.css';
 const DatePickerButton = () => {
   const [selectedDate, setSelectedDate] = useState(null);
 
-  const handleDateChange = (date) => {
+  const handleDateChange = date => {
     setSelectedDate(date);
   };
 
-  const toggleDatePicker = () => {
-    if (selectedDate === null) {
-      setSelectedDate(new Date());
-    }
-  };
+  const CustomDatePickerInput = React.forwardRef(({ onClick }, ref) => (
+    <div onClick={onClick} ref={ref}>
+      {selectedDate ? selectedDate.toDateString() : 'Click to select date'}
+    </div>
+  ));
 
   return (
     <div>
-      {selectedDate ? (
-        <button>{selectedDate.toDateString()}</button>
-      ) : (
-        <div>
-          <button onClick={toggleDatePicker}>Select the Date</button>
-        </div>
-      )}
-      {selectedDate && (
+      <label>
+        Select Date:
         <DatePicker
           selected={selectedDate}
           onChange={handleDateChange}
-          onClickOutside={() => setSelectedDate(null)}
-          withPortal
-          inline
+          customInput={<CustomDatePickerInput />}
+          onClickOutside={() => document.getElementById('datePicker').blur()}
+          style={{ display: 'none' }}
         />
-      )}
+      </label>
     </div>
   );
 };
