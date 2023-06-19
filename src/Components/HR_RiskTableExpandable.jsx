@@ -2,7 +2,21 @@ import React, { useState } from 'react';
 import './Table.css';
 import './style.css';
 
-const HR_RiskTable = ({ risks }) => {
+const HR_RiskTable = ({ risk }) => {
+
+
+  const riskDomains = ["Domain1", "Domain2", "Domain3"];
+  const riskOccurrence=["UnLikely","Very Likely","Could Happen"]
+  const impactOnCIA =["High","Medium","Low"]
+  const existingcontrolControlType=["Manual" ,"Automated"]
+  const existingnatureOfControlOptions=["Preventive" ,"Detective","Recovery","Awareness"]
+  const existingriskTreatmentOptions=["Accept" ,"Mitigate","Avoid","Transfer"]
+  const plannedcontrolControlType=["Manual" ,"Automated"]
+  const plannednatureOfControlOptions=["Preventive" ,"Detective","Recovery","Awareness"]
+  const [risks, setRisks] = useState(risk)
+
+
+
   const [expandedRisk, setExpandedRisk] = useState(null);
 
   const getTableHeaders = (header) => {
@@ -27,77 +41,204 @@ const HR_RiskTable = ({ risks }) => {
     setExpandedRisk(null);
   };
 
+
+  const handleChange = (index, value,type ) => {
+   console.log("changed",type,value)
+    const updatedRisks = [...risks];
+    switch(type){
+      case "RiskDomain":
+      updatedRisks[index].RiskIdentification.RiskDomain = value;
+      break 
+      case "LikelihoodOfRiskOccurrence":
+      updatedRisks[index].RiskAssessment.LikelihoodOfRiskOccurrence = value;
+      console.log("changed",type,value)
+      break ;
+      case "ImpactOnCIA" :
+      updatedRisks[index].RiskAssessment.ImpactOnCIA = value;
+      break;
+      case "ExisitingControlType" :
+         updatedRisks[index].RiskExitingControl.ControlType= value;
+      break ;
+      case "ExisitingNatureOfControl" :
+         updatedRisks[index].RiskExitingControl.NatureOfControl= value;
+      break;
+      case "ExisitingRiskTreatment" :
+         updatedRisks[index].RiskExitingControl.RiskTreatment= value;
+      break;
+       case "PlannedControlType" :
+         updatedRisks[index].RiskPlannedControls.PlannedControlType= value;
+      break ;
+      case "PlannedControlType" :
+         updatedRisks[index].RiskPlannedControls.PlannedControlType= value;
+      break ;
+      default:
+        break; 
+
+    }
+   
+    setRisks(updatedRisks)
+   
+  };
+
   const getTableRows = (header) => {
     return risks.map((risk, index) => (
       <React.Fragment key={index}>
-        <tr>
-          {Object.values(risk[header]).map((value, index) => (
-            <td key={index}>{value}</td>
-          ))}
-          <td>
-            <button onClick={() => handleButtonClick(index)}>Expand</button>
+      <tr>
+        {Object.entries(risk[header]).map(([key, value], innerIndex) => (
+          <td key={innerIndex}>
+            {key === 'RiskDomain' ? (
+              <select
+                className="select-dropdown"
+                value={value}
+                onChange={(e) => handleChange(index, e.target.value, "RiskDomain")}>
+                {riskDomains.map((domain) => (
+                  <option key={domain} value={domain}>
+                    {domain}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              value
+            )}
           </td>
-        </tr>
-        {expandedRisk === index && (
-          <tr className="expanded-row">
-            <td colSpan={Object.keys(risk[header]).length + 1}>
-              <table className="sub-table">
-                <thead>
-                  <tr>
-                    {getTableHeaders('RiskAssessment', false).slice(0, -1)}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {Object.values(risk.RiskAssessment).map((value, index) => (
-                      <td key={index}>{value}</td>
+        ))}
+        <td>
+          <button onClick={() => handleButtonClick(index)}>Expand</button>
+        </td>
+      </tr>
+  {expandedRisk === index && (
+  <tr className="expanded-row">
+    <td colSpan={Object.keys(risk[header]).length + 1}>
+      <table className="sub-table">
+        <thead>
+          <tr>{getTableHeaders('RiskAssessment', false).slice(0, -1)}</tr>
+        </thead>
+        <tbody>
+          <tr>
+            {Object.entries(risk.RiskAssessment).map(([key, value], innerindex1) => (
+              <td key={innerindex1}>
+                {key === 'LikelihoodOfRiskOccurrence' ? (
+                  <select
+                    className="select-dropdown"
+                    value={value}
+                    onChange={(e) =>
+                      handleChange(index, e.target.value, 'LikelihoodOfRiskOccurrence')
+                    }
+                  >
+                    {riskOccurrence.map((ocuurance) => (
+                      <option key={ocuurance} value={ocuurance}>
+                        {ocuurance}
+                      </option>
                     ))}
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        )}
-        {expandedRisk === index && (
-          <tr className="expanded-row">
-            <td colSpan={Object.keys(risk[header]).length + 1}>
-              <table className="sub-table">
-                <thead>
-                  <tr>
-                    {getTableHeaders('RiskExitingControl', false).slice(0, -1)}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {Object.values(risk.RiskPlannedControls).map((value, index) => (
-                      <td key={index}>{value}</td>
+                  </select>
+                ) : key === 'ImpactOnCIA' ? (
+                  <select
+                    className="select-dropdown"
+                    value={value}
+                    onChange={(e) => handleChange(index, e.target.value, 'ImpactOnCIA')}
+                  >
+                    {impactOnCIA.map((impact) => (
+                      <option key={impact} value={impact}>
+                        {impact}
+                      </option>
                     ))}
-                  </tr>
-                </tbody>
-              </table>
-            </td>
+                  </select>
+                ) : (
+                  value
+                )}
+              </td>
+            ))}
           </tr>
-        )}
-        {expandedRisk === index && (
-          <tr className="expanded-row">
-            <td colSpan={Object.keys(risk[header]).length + 1}>
-              <table className="sub-table">
-                <thead>
-                  <tr>
-                    {getTableHeaders('RiskPlannedControls', false).slice(0, -1)}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {Object.values(risk.RiskPlannedControls).map((value, index) => (
-                      <td key={index}>{value}</td>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+)}
+{expandedRisk === index && (
+  <tr className="expanded-row">
+    <td colSpan={Object.keys(risk[header]).length + 1}>
+      <table className="sub-table">
+        <thead>
+          <tr>{getTableHeaders('RiskExitingControl', false).slice(0, -1)}</tr>
+        </thead>
+        <tbody>
+          <tr>
+            {Object.entries(risk.RiskExitingControl).map(([key, value], innerindex1) => (
+              <td key={innerindex1}>
+                {key === 'ControlType' || key === 'NatureOfControl' || key === 'RiskTreatment' ? (
+                  <select
+                    className="select-dropdown"
+                    value={value}
+                    onChange={(e) => handleChange(index, e.target.value, "Exisiting"+key)}
+                  >
+                    {key === 'ControlType' && existingcontrolControlType.map((controlType) => (
+                      <option key={controlType} value={controlType}>
+                        {controlType}
+                      </option>
                     ))}
-                  </tr>
-                </tbody>
-              </table>
-            </td>
+                    {key === 'NatureOfControl' && existingnatureOfControlOptions.map((controlOption) => (
+                      <option key={controlOption} value={controlOption}>
+                        {controlOption}
+                      </option>
+                    ))}
+                    {key === 'RiskTreatment' && existingriskTreatmentOptions.map((treatmentOption) => (
+                      <option key={treatmentOption} value={treatmentOption}>
+                        {treatmentOption}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  value
+                )}
+              </td>
+            ))}
           </tr>
-        )}
+        </tbody>
+      </table>
+    </td>
+  </tr>
+)}
+
+{expandedRisk === index && (
+  <tr className="expanded-row">
+    <td colSpan={Object.keys(risk[header]).length + 1}>
+      <table className="sub-table">
+        <thead>
+          <tr>{getTableHeaders('RiskPlannedControls', false).slice(0, -1)}</tr>
+        </thead>
+        <tbody>
+          <tr>
+            {Object.entries(risk.RiskPlannedControls).map(([key, value], innerindex1) => (
+              <td key={innerindex1}>
+                {key === 'PlannedControlType' || key === 'PlannedNatureOfControl' ? (
+                  <select
+                    className="select-dropdown"
+                    value={value}
+                    onChange={(e) => handleChange(index, e.target.value, key)}
+                  >
+                    {key === 'PlannedControlType' && plannedcontrolControlType.map((controlType) => (
+                      <option key={controlType} value={controlType}>
+                        {controlType}
+                      </option>
+                    ))}
+                    {key === 'PlannedNatureOfControl' && plannednatureOfControlOptions.map((controlOption) => (
+                      <option key={controlOption} value={controlOption}>
+                        {controlOption}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  value
+                )}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+)}
+
         {expandedRisk === index && (
           <tr className="expanded-row">
             <td colSpan={Object.keys(risk[header]).length + 1}>
@@ -115,10 +256,13 @@ const HR_RiskTable = ({ risks }) => {
                   </tr>
                 </tbody>
               </table>
-              <button onClick={handleCloseButtonClick}>Close</button>
-            </td>
+                <button onClick={handleCloseButtonClick}>Close</button>
+          
+              </td>
           </tr>
+          
         )}
+
       </React.Fragment>
     ));
   };

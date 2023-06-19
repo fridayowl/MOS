@@ -81,7 +81,7 @@ const HR_ExpTest = () => {
   return (
     <div>
       <h1>Risk Table</h1> 
-        <HR_RiskTable risks={risks} />
+        <HR_RiskTable risk={risks} />
       
     </div>
   );
