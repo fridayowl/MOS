@@ -13,6 +13,7 @@ const HR_RiskTable = ({ risk }) => {
   const existingriskTreatmentOptions=["Accept" ,"Mitigate","Avoid","Transfer"]
   const plannedcontrolControlType=["Manual" ,"Automated"]
   const plannednatureOfControlOptions=["Preventive" ,"Detective","Recovery","Awareness"]
+  const riskStatus =["Managed","Unmanaged","UnderReview","Open","Closed","Below Risk Appetitte"] 
   const [risks, setRisks] = useState(risk)
 
 
@@ -68,8 +69,11 @@ const HR_RiskTable = ({ risk }) => {
        case "PlannedControlType" :
          updatedRisks[index].RiskPlannedControls.PlannedControlType= value;
       break ;
-      case "PlannedControlType" :
-         updatedRisks[index].RiskPlannedControls.PlannedControlType= value;
+      case "PlannedNatureOfControl" :
+         updatedRisks[index].RiskPlannedControls.PlannedNatureOfControl= value;
+      break ;
+      case "RiskStatus" :
+         updatedRisks[index].RiskMonitoring.RiskStatus= value;
       break ;
       default:
         break; 
@@ -239,29 +243,41 @@ const HR_RiskTable = ({ risk }) => {
   </tr>
 )}
 
-        {expandedRisk === index && (
-          <tr className="expanded-row">
-            <td colSpan={Object.keys(risk[header]).length + 1}>
-              <table className="sub-table">
-                <thead>
-                  <tr>
-                    {getTableHeaders('RiskMonitoring', false).slice(0, -1)}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {Object.values(risk.RiskMonitoring).map((value, index) => (
-                      <td key={index}>{value}</td>
+     {expandedRisk === index && (
+  <tr className="expanded-row">
+    <td colSpan={Object.keys(risk[header]).length + 1}>
+      <table className="sub-table">
+        <thead>
+          <tr>{getTableHeaders('RiskMonitoring', false).slice(0, -1)}</tr>
+        </thead>
+        <tbody>
+          <tr>
+            {Object.entries(risk.RiskMonitoring).map(([key, value], innerindex1) => (
+              <td key={innerindex1}>
+                {key === 'RiskStatus' ? (
+                  <select
+                    className="select-dropdown"
+                    value={value}
+                    onChange={(e) => handleChange(index, e.target.value, key)}
+                  >
+                    {riskStatus.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
                     ))}
-                  </tr>
-                </tbody>
-              </table>
-                <button onClick={handleCloseButtonClick}>Close</button>
-          
+                  </select>
+                ) : (
+                  value
+                )}
               </td>
+            ))}
           </tr>
-          
-        )}
+        </tbody>
+      </table>
+      <button onClick={handleCloseButtonClick}>Close</button>
+    </td>
+  </tr>
+)}
 
       </React.Fragment>
     ));

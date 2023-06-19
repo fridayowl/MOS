@@ -12,7 +12,7 @@ const HR_ExpTest = () => {
         RiskDomain: "Pre Employment",
         RiskStatement: "Background checks are not performed on interns",
         RiskOwner: "Mitalee",
-        RiskIdentificationDate: "20 March 2022"
+        RiskIdentificationDate: "20/02/2022"
       },
       RiskAssessment: {
         RiskConsequences: "Interns with improper qualifications/police records may not be identified",
@@ -46,7 +46,7 @@ const HR_ExpTest = () => {
         RiskDomain: "Pre Employment",
         RiskStatement: "Background checks are not performed on interns",
         RiskOwner: "Mitalee",
-        RiskIdentificationDate: "20 March 2022"
+        RiskIdentificationDate:"20/02/2022"
       },
       RiskAssessment: {
         RiskConsequences: "Interns with improper qualifications/police records may not be identified",
