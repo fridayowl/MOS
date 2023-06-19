@@ -2,11 +2,25 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DatePickerButton = ({ defaultDate }) => {
+const DatePickerButton = ({ defaultDate,setRisks ,risks,index , type  }) => {
+
+    
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = date => {
     setSelectedDate(date);
+     const updatedRisks = [...risks];
+     switch(type) {
+        case "ExpectedClosedDate" :
+        updatedRisks[index].RiskMonitoring.ExpectedClosedDate =date.toLocaleDateString('en-GB');
+        break ; 
+        case "RiskIdentificationDate" :
+         updatedRisks[index].RiskIdentification.RiskIdentificationDate =date.toLocaleDateString('en-GB');   
+        default :
+        break ;
+
+     }
+      setRisks(updatedRisks)
   };
 
   const CustomDatePickerInput = React.forwardRef(({ onClick }, ref) => (

@@ -84,6 +84,7 @@ const HR_RiskTable = ({ risk }) => {
     setRisks(updatedRisks)
    
   };
+  console.log(risks)
 
   const getTableRows = (header) => {
     return risks.map((risk, index) => (
@@ -104,7 +105,7 @@ const HR_RiskTable = ({ risk }) => {
           ))}
         </select>
       ) : key === 'RiskIdentificationDate' ? (
-          <DatePickerButton/>
+         <DatePickerButton defaultDate={value} setRisks={setRisks} risks={risks} index={index} type="RiskIdentificationDate" />
       ) : (
         value
       )}
@@ -272,7 +273,7 @@ const HR_RiskTable = ({ risk }) => {
                     ))}
                   </select>
                 ) : key === 'ExpectedClosedDate' ? (
-                  <DatePickerButton ({defaultDate={}}) />
+                 <DatePickerButton defaultDate={value} setRisks={setRisks} risks={risks} index={index} type="ExpectedClosedDate"  />
                 ) : (
                   value
                 )}
