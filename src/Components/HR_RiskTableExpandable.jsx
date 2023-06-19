@@ -1,105 +1,134 @@
 import React, { useState } from 'react';
-import '../style/RiskTable.scss';
+import './Table.css';
+import './style.css';
 
 const HR_RiskTable = ({ risks }) => {
-  const [expandedRows, setExpandedRows] = useState([]);  
+  const [expandedRisk, setExpandedRisk] = useState(null);
 
-  const toggleRow = (index) => {
-    const currentIndex = expandedRows.indexOf(index);
-    const newExpandedRows = [...expandedRows];
+  const getTableHeaders = (header) => {
+    if (risks.length === 0) return null;
 
-    if (currentIndex === -1) {
-      newExpandedRows.push(index);
-    } else {
-      newExpandedRows.splice(currentIndex, 1);
-    }
-
-    setExpandedRows(newExpandedRows);
+    const riskKeys = Object.keys(risks[0][header]);
+    return [
+      ...riskKeys.map((key, index) => <th key={index}>{key}</th>),
+      <th key="actions">Actions</th> // Added the actions column header
+    ];
   };
 
- 
+  const handleButtonClick = (index) => {
+    if (expandedRisk === index) {
+      setExpandedRisk(null); // Collapse the expanded row if the same button is clicked again
+    } else {
+      setExpandedRisk(index);
+    }
+  };
+
+  const handleCloseButtonClick = () => {
+    setExpandedRisk(null);
+  };
+
+  const getTableRows = (header) => {
+    return risks.map((risk, index) => (
+      <React.Fragment key={index}>
+        <tr>
+          {Object.values(risk[header]).map((value, index) => (
+            <td key={index}>{value}</td>
+          ))}
+          <td>
+            <button onClick={() => handleButtonClick(index)}>Expand</button>
+          </td>
+        </tr>
+        {expandedRisk === index && (
+          <tr className="expanded-row">
+            <td colSpan={Object.keys(risk[header]).length + 1}>
+              <table className="sub-table">
+                <thead>
+                  <tr>
+                    {getTableHeaders('RiskAssessment', false).slice(0, -1)}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {Object.values(risk.RiskAssessment).map((value, index) => (
+                      <td key={index}>{value}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        )}
+        {expandedRisk === index && (
+          <tr className="expanded-row">
+            <td colSpan={Object.keys(risk[header]).length + 1}>
+              <table className="sub-table">
+                <thead>
+                  <tr>
+                    {getTableHeaders('RiskExitingControl', false).slice(0, -1)}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {Object.values(risk.RiskPlannedControls).map((value, index) => (
+                      <td key={index}>{value}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        )}
+        {expandedRisk === index && (
+          <tr className="expanded-row">
+            <td colSpan={Object.keys(risk[header]).length + 1}>
+              <table className="sub-table">
+                <thead>
+                  <tr>
+                    {getTableHeaders('RiskPlannedControls', false).slice(0, -1)}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {Object.values(risk.RiskPlannedControls).map((value, index) => (
+                      <td key={index}>{value}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        )}
+        {expandedRisk === index && (
+          <tr className="expanded-row">
+            <td colSpan={Object.keys(risk[header]).length + 1}>
+              <table className="sub-table">
+                <thead>
+                  <tr>
+                    {getTableHeaders('RiskMonitoring', false).slice(0, -1)}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {Object.values(risk.RiskMonitoring).map((value, index) => (
+                      <td key={index}>{value}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+              <button onClick={handleCloseButtonClick}>Close</button>
+            </td>
+          </tr>
+        )}
+      </React.Fragment>
+    ));
+  };
+
   return (
     <table className="risk-table">
       <thead>
-        <tr>
-          <th>Risk ID</th>
-          <th>Risk Domain</th>
-          <th>Risk Statement</th>
-          <th>Risk Consequences</th> 
-        </tr>
+        <tr>{getTableHeaders('RiskIdentification')}</tr>
       </thead>
-      <tbody>
-        {risks.map((risk, index) => (
-          <React.Fragment key={risk['Risk ID']}>
-            <tr>
-              <td onClick={() => toggleRow(index)}>{risk['Risk ID']}</td>
-              <td>{risk['Risk Domain']}</td>
-              <td>{risk['Impact on CIA']}</td>
-              <td>{risk['Inherent Risk Severity']}</td>
-            </tr>
-  {expandedRows.includes(index) && (
-              <>
-                <tr className="controls-row">
-                  <td colSpan={7}>
-                    <h4>Existing Controls</h4>
-                    <table className="controls-table">
-                      <thead>
-                        <tr>
-                          <th>Control Type</th>
-                          <th>Nature of Control</th>
-                          <th>Residual Risk Severity</th>
-                          <th>Risk Treatment</th>
-                          <th>Risk Owner</th>
-                          <th>ISO 27001 Mapping</th>
-                          <th>Risk Identification Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{risk.Controls[0]['Control Type']}</td>
-                          <td>{risk.Controls[0]['Nature of Control']}</td>
-                          <td>{risk.Controls[0]['Residual Risk Severity']}</td>
-                          <td>{risk.Controls[0]['Risk Treatment']}</td>
-                          <td>{risk.Controls[0]['Risk Owner']}</td>
-                          <td>{risk.Controls[0]['ISO 27001 Mapping']}</td>
-                          <td>{risk.Controls[0]['Risk Identification Date']}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-                <tr className="controls-row">
-                  <td colSpan={7}>
-                    <h4>Planned Controls</h4>
-                    <table className="controls-table">
-                      <thead>
-                        <tr>
-                          <th>Control Type</th>
-                          <th>Nature of Control</th>
-                          <th>Residual Risk Value after Planned Control</th>
-                          <th>Expected Closed Date</th>
-                          <th>Risk Status</th>
-                          <th>Remarks</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{risk.Controls[1]['Control Type']}</td>
-                          <td>{risk.Controls[1]['Nature of Control']}</td>
-                          <td>{risk.Controls[1]['Residual Risk Value after Planned Control']}</td>
-                          <td>{risk.Controls[1]['Expected Closed Date']}</td>
-                          <td>{risk.Controls[1]['Risk Status']}</td>
-                          <td>{risk.Controls[1]['Remarks']}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </>
-            )}
-          </React.Fragment>
-        ))}
-      </tbody>
+      <tbody>{getTableRows('RiskIdentification')}</tbody>
     </table>
   );
 };

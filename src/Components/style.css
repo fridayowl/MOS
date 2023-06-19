@@ -1,0 +1,21 @@
+/* Button Styles */
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #5cbff1;
+  color: #fcfcfc;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: #0b0808;
+  color: #ffffff;
+}
+ 

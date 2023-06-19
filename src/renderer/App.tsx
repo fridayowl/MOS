@@ -10,7 +10,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Table/>} />
+        <Route path="/" element={<HR_ExpTest />} />
       </Routes>
     </Router>
   );
