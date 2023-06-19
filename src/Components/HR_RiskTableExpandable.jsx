@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Table.css';
 import './style.css';
+ import DatePickerButton from  'Components/Datepicker'
 
 const HR_RiskTable = ({ risk }) => {
 
@@ -87,29 +88,33 @@ const HR_RiskTable = ({ risk }) => {
   const getTableRows = (header) => {
     return risks.map((risk, index) => (
       <React.Fragment key={index}>
-      <tr>
-        {Object.entries(risk[header]).map(([key, value], innerIndex) => (
-          <td key={innerIndex}>
-            {key === 'RiskDomain' ? (
-              <select
-                className="select-dropdown"
-                value={value}
-                onChange={(e) => handleChange(index, e.target.value, "RiskDomain")}>
-                {riskDomains.map((domain) => (
-                  <option key={domain} value={domain}>
-                    {domain}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              value
-            )}
-          </td>
-        ))}
-        <td>
-          <button onClick={() => handleButtonClick(index)}>Expand</button>
-        </td>
-      </tr>
+<tr>
+  {Object.entries(risk[header]).map(([key, value], innerIndex) => (
+    <td key={innerIndex}>
+      {key === 'RiskDomain' ? (
+        <select
+          className="select-dropdown"
+          value={value}
+          onChange={(e) => handleChange(index, e.target.value, "RiskDomain")}
+        >
+          {riskDomains.map((domain) => (
+            <option key={domain} value={domain}>
+              {domain}
+            </option>
+          ))}
+        </select>
+      ) : key === 'RiskIdentificationDate' ? (
+          <DatePickerButton/>
+      ) : (
+        value
+      )}
+    </td>
+  ))}
+  <td>
+    <button onClick={() => handleButtonClick(index)}>Expand</button>
+  </td>
+</tr>
+
   {expandedRisk === index && (
   <tr className="expanded-row">
     <td colSpan={Object.keys(risk[header]).length + 1}>
@@ -243,7 +248,7 @@ const HR_RiskTable = ({ risk }) => {
   </tr>
 )}
 
-     {expandedRisk === index && (
+ {expandedRisk === index && (
   <tr className="expanded-row">
     <td colSpan={Object.keys(risk[header]).length + 1}>
       <table className="sub-table">
@@ -266,6 +271,8 @@ const HR_RiskTable = ({ risk }) => {
                       </option>
                     ))}
                   </select>
+                ) : key === 'ExpectedClosedDate' ? (
+                  <DatePickerButton ({defaultDate={}}) />
                 ) : (
                   value
                 )}
@@ -278,6 +285,7 @@ const HR_RiskTable = ({ risk }) => {
     </td>
   </tr>
 )}
+
 
       </React.Fragment>
     ));
