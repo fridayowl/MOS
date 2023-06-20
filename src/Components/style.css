@@ -11,6 +11,7 @@ button {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  margin:2px;
   transition: background-color 0.3s, color 0.3s;
 }
 

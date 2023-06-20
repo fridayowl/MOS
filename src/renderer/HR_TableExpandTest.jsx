@@ -3,6 +3,8 @@ import HR_RiskTable from 'Components/HR_RiskTableExpandable';
 import React, { useEffect, useState } from 'react';
 import  RiskStatusDistributionChart from 'Components/Analytics/RiskStatusDistributionChart'
 import RiskDomainAnalysis from 'Components/Analytics/RiskDomainAnalysis';
+import RiskAssessmentMetrics from 'Components/Analytics/RiskAssessmentMetrics'
+import  RiskMonitoringMetricsChart from 'Components/Analytics/RiskMonitoringMetricsChart'
 const HR_ExpTest = () => {
    
    
@@ -70,7 +72,7 @@ const HR_ExpTest = () => {
         ResidualRiskValueAfterPlannedControl: "#REF!",
       },
       RiskMonitoring: { 
-        ExpectedClosedDate: "10 May 22",
+        ExpectedClosedDate: "11 May 22",
         RiskStatus: "Managed",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
       }
@@ -104,7 +106,7 @@ const HR_ExpTest = () => {
         ResidualRiskValueAfterPlannedControl: "#REF!",
       },
       RiskMonitoring: { 
-        ExpectedClosedDate: "10 May 22",
+        ExpectedClosedDate: "12 May 22",
         RiskStatus: "Managed",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
       }
@@ -138,7 +140,7 @@ const HR_ExpTest = () => {
         ResidualRiskValueAfterPlannedControl: "#REF!",
       },
       RiskMonitoring: { 
-        ExpectedClosedDate: "10 May 22",
+        ExpectedClosedDate: "13 May 22",
         RiskStatus: "Managed",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
       }
@@ -172,7 +174,7 @@ const HR_ExpTest = () => {
         ResidualRiskValueAfterPlannedControl: "#REF!",
       },
       RiskMonitoring: { 
-        ExpectedClosedDate: "10 May 22",
+        ExpectedClosedDate: "14 May 22",
         RiskStatus: "UnManaged",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
       }
@@ -187,9 +189,10 @@ const HR_ExpTest = () => {
       <h1>Risk Table</h1> 
         {/* <HR_RiskTable risk={risks} /> */}
         {/* <RiskStatusDistributionChart risks={risks}  /> */}
-        <RiskDomainAnalysis risks={risks}  />
-      
-    </div>
+        {/* <RiskDomainAnalysis risks={risks}  /> */}
+        {/* <RiskAssessmentMetrics  risks={risks}  /> */}
+         <RiskMonitoringMetricsChart risks={risks}  />
+    </div> 
   );
 }
 
