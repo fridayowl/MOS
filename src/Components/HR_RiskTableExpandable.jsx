@@ -17,8 +17,12 @@ const HR_RiskTable = ({ risk }) => {
   const plannednatureOfControlOptions=["Preventive" ,"Detective","Recovery","Awareness"]
   const riskStatus =["Managed","Unmanaged","UnderReview","Open","Closed","Below Risk Appetitte"] 
   const [risks, setRisks] = useState(risk)
+  const [filterStatus, setFilterStatus] = useState(null); // New state for filtering
 
 
+ const handleFilterStatus = (status) => {
+    setFilterStatus(status);
+  };
 
   const [expandedRisk, setExpandedRisk] = useState(null);
 
@@ -88,7 +92,12 @@ const HR_RiskTable = ({ risk }) => {
   console.log(risks)
 
   const getTableRows = (header) => {
-    return risks.map((risk, index) => (
+   let filteredRisks = risks;
+    if (filterStatus) {
+      filteredRisks = risks.filter((risk) => risk.RiskMonitoring.RiskStatus === filterStatus);
+    }
+
+    return filteredRisks.map((risk, index) => (
       <React.Fragment key={index}>
 <tr>
  {Object.entries(risk[header]).map(([key, value], innerIndex) => (
@@ -121,7 +130,7 @@ const HR_RiskTable = ({ risk }) => {
   </td>
 ))}
 <td>
-  <button onClick={() => handleButtonClick(index)}>Expand</button>
+  <button onClick={() => handleButtonClick(index)}>More Action</button>
 </td>
 
 </tr>
@@ -321,12 +330,25 @@ const HR_RiskTable = ({ risk }) => {
   };
 
   return (
-    <table className="risk-table">
-      <thead>
-        <tr>{getTableHeaders('RiskIdentification')}</tr>
-      </thead>
-      <tbody>{getTableRows('RiskIdentification')}</tbody>
-    </table>
+    <div>
+      <div>
+        {riskStatus.map((status, index) => (
+          <button
+            key={index}
+            onClick={() => handleFilterStatus(status)}
+            className={filterStatus === status ? 'active' : ''}
+          >
+            {status}
+          </button>
+        ))}
+      </div>
+      <table className="risk-table">
+        <thead>
+          <tr>{getTableHeaders('RiskIdentification')}</tr>
+        </thead>
+        <tbody>{getTableRows('RiskIdentification')}</tbody>
+      </table>
+    </div>
   );
 };
 
