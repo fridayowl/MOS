@@ -1,42 +1,46 @@
-import React from 'react';
-import { Radar } from 'react-chartjs-2';
+import React from "react";
+import { Radar } from "react-chartjs-2";
 
-const RiskAssessmentMetrics = ({ risks }) => {
-  // Extracting likelihood of risk occurrence and impact on CIA from each risk
-  const likelihoodOfOccurrence = risks.map((risk) => risk.RiskAssessment.LikelihoodOfRiskOccurrence);
-  const impactOnCIA = risks.map((risk) => risk.RiskAssessment.ImpactOnCIA);
+const RiskAssessmentMetrics = ({risks}) => {
+  
+  // Extracting Impact on CIA values from the risks
+  const impactValues = risks.map((risk) => risk.RiskAssessment.ImpactOnCIA);
 
-  // Data for the Radar Chart
+  // Counting the occurrences of each impact value
+  const countValues = impactValues.reduce((counts, value) => {
+    counts[value] = (counts[value] || 0) + 1;
+    return counts;
+  }, {});
+
+  // Radar chart data
   const data = {
-    labels: ['Risk 1', 'Risk 2', 'Risk 3', 'Risk 4', 'Risk 5'],
+    labels: ["Confidentiality", "Integrity", "Availability"],
     datasets: [
       {
-        label: 'Likelihood of Risk Occurrence',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
-        data: likelihoodOfOccurrence,
-      },
-      {
-        label: 'Impact on CIA',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
-        data: impactOnCIA,
+        label: "Impact on CIA",
+        data: [
+          countValues["Low"] || 0,
+          countValues["Medium"] || 0,
+          countValues["High"] || 0,
+        ],
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 1,
       },
     ],
+  };
+
+  // Radar chart options
+  const options = {
+    scale: {
+      ticks: { beginAtZero: true },
+    },
   };
 
   return (
     <div>
       <h2>Risk Assessment Metrics</h2>
-      <Radar data={data} />
+      <Radar data={data} options={options} />
     </div>
   );
 };

@@ -20,7 +20,7 @@ const HR_ExpTest = () => {
       RiskAssessment: {
         RiskConsequences: "Interns with improper qualifications/police records may not be identified",
         LikelihoodOfRiskOccurrence: "Unlikely",
-        ImpactOnCIA: "High Medium Low",
+        ImpactOnCIA: "High",
         InherentRiskSeverity: "Low"
       },
       RiskExitingControl: {
@@ -39,7 +39,7 @@ const HR_ExpTest = () => {
       },
       RiskMonitoring: { 
         ExpectedClosedDate: "10 May 22",
-        RiskStatus: "Managed",
+        RiskStatus: "UnManaged",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
       }
     },
@@ -54,7 +54,7 @@ const HR_ExpTest = () => {
       RiskAssessment: {
         RiskConsequences: "Interns with improper qualifications/police records may not be identified",
         LikelihoodOfRiskOccurrence: "Unlikely",
-        ImpactOnCIA: "High Medium Low",
+        ImpactOnCIA: "Medium",
         InherentRiskSeverity: "Low"
       },
       RiskExitingControl: {
@@ -73,7 +73,7 @@ const HR_ExpTest = () => {
       },
       RiskMonitoring: { 
         ExpectedClosedDate: "11 May 22",
-        RiskStatus: "Managed",
+        RiskStatus: "UnManaged",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
       }
     },
@@ -88,7 +88,7 @@ const HR_ExpTest = () => {
       RiskAssessment: {
         RiskConsequences: "Interns with improper qualifications/police records may not be identified",
         LikelihoodOfRiskOccurrence: "Unlikely",
-        ImpactOnCIA: "High Medium Low",
+        ImpactOnCIA: "High",
         InherentRiskSeverity: "Low"
       },
       RiskExitingControl: {
@@ -122,7 +122,7 @@ const HR_ExpTest = () => {
       RiskAssessment: {
         RiskConsequences: "Interns with improper qualifications/police records may not be identified",
         LikelihoodOfRiskOccurrence: "Unlikely",
-        ImpactOnCIA: "High Medium Low",
+        ImpactOnCIA: "Low",
         InherentRiskSeverity: "Low"
       },
       RiskExitingControl: {
@@ -156,7 +156,7 @@ const HR_ExpTest = () => {
       RiskAssessment: {
         RiskConsequences: "Interns with improper qualifications/police records may not be identified",
         LikelihoodOfRiskOccurrence: "Unlikely",
-        ImpactOnCIA: "High Medium Low",
+        ImpactOnCIA: "Low",
         InherentRiskSeverity: "Low"
       },
       RiskExitingControl: {
@@ -175,7 +175,7 @@ const HR_ExpTest = () => {
       },
       RiskMonitoring: { 
         ExpectedClosedDate: "14 May 22",
-        RiskStatus: "UnManaged",
+        RiskStatus: "Open",
         Remarks: "Performing BGV's for Intern from May 2022 joiners onwards\n31st May 2022 - VT - Verified samples which demonstrate the risk has been closed"
       }
     }
@@ -187,11 +187,12 @@ const HR_ExpTest = () => {
   return (
     <div>
       <h1>Risk Table</h1> 
-        {/* <HR_RiskTable risk={risks} /> */}
-        {/* <RiskStatusDistributionChart risks={risks}  /> */}
-        {/* <RiskDomainAnalysis risks={risks}  /> */}
-        {/* <RiskAssessmentMetrics  risks={risks}  /> */}
-         <RiskMonitoringMetricsChart risks={risks}  />
+      
+        <HR_RiskTable risk={risks} />
+        {/* <RiskStatusDistributionChart risks={risks}  />
+        <RiskDomainAnalysis risks={risks}  /> 
+        <RiskAssessmentMetrics  risks={risks}  />
+        <RiskMonitoringMetricsChart risks={risks}  /> */}
     </div> 
   );
 }

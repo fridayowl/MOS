@@ -2,7 +2,6 @@ import React from 'react';
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from 'recharts';
 
 const RiskStatusDistributionChart = ({ risks }) => {
-  // Count the number of risks for each status
   const riskStatusCount = risks.reduce((count, risk) => {
     const { RiskMonitoring } = risk;
     const status = RiskMonitoring.RiskStatus;
@@ -14,13 +13,11 @@ const RiskStatusDistributionChart = ({ risks }) => {
     return count;
   }, {});
 
-  // Prepare data for the pie chart
   const data = Object.entries(riskStatusCount).map(([status, count]) => ({
     status,
     count,
   }));
 
-  // Define colors for each status
   const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#FF0000'];
 
   return (

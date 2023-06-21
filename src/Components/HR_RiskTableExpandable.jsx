@@ -15,7 +15,7 @@ const HR_RiskTable = ({ risk }) => {
   const existingriskTreatmentOptions=["Accept" ,"Mitigate","Avoid","Transfer"]
   const plannedcontrolControlType=["Manual" ,"Automated"]
   const plannednatureOfControlOptions=["Preventive" ,"Detective","Recovery","Awareness"]
-  const riskStatus =["Managed","Unmanaged","UnderReview","Open","Closed","Below Risk Appetitte"] 
+  const riskStatus =["Managed","UnManaged","UnderReview","Open","Closed","Below Risk Appetitte"] 
   const [risks, setRisks] = useState(risk)
   const [filterStatus, setFilterStatus] = useState(null); // New state for filtering
 
