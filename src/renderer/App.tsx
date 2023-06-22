@@ -23,7 +23,7 @@ export default function App() {
       <Routes>
         {/* <Route path="/" element={ <SideBar data={sidebarData} />} /> */}
         {/* <Route path="/" element={ <HR_ExpTest/>} /> */}
-        <Route path="/" element={ <Homepage/>} />
+        <Route path="/" element={ <Table/>} />
       </Routes>
     </Router>
   );

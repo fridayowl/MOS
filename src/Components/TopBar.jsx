@@ -1,4 +1,5 @@
-import React from 'react';
+// TopBar.js
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -8,22 +9,28 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
+import MenuIcon from '@mui/icons-material/Menu';
+import InputBase from '@mui/material/InputBase';
+import Typography from '@mui/material/Typography';
+
+import './topbar.css';
 
 const TopBar = () => {
-  // State for the profile menu
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isRotated, setIsRotated] = useState(false);
 
-  // Open profile menu
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  // Close profile menu
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
   };
 
-  // Profile menu options
+  const toggleRotation = () => {
+    setIsRotated(!isRotated);
+  };
+
   const profileMenuOptions = [
     { label: 'Profile', onClick: handleProfileMenuClose },
     { label: 'Settings', onClick: handleProfileMenuClose },
@@ -31,41 +38,56 @@ const TopBar = () => {
   ];
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          {/* Your navigation bar button icon */}
-        </IconButton>
-        <div style={{ flex: 1 }}>
-          {/* Your search bar component */}
-        </div>
-        <div>
+    <AppBar position="static" color="inherit">
+      <Toolbar className="topbar" style={{ '--toolbar-background-color': '#f2f2f2', '--toolbar-font-size': '14px' }}>
+        <div style={{ flexGrow: 1 }}>
           <IconButton
+            edge="start"
             color="inherit"
-            aria-controls="profile-menu"
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
+            aria-label="menu"
+            onClick={toggleRotation}
+            className={`menuButton ${isRotated ? 'rotated' : ''}`}
           >
-            <Avatar>
-              <AccountCircleIcon />
-            </Avatar>
-          </IconButton>
-          <Menu
-            id="profile-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleProfileMenuClose}
-          >
-            {profileMenuOptions.map((option, index) => (
-              <MenuItem key={index} onClick={option.onClick}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Menu>
-          <IconButton color="inherit" aria-label="settings">
-            <SettingsIcon />
+            <MenuIcon />
           </IconButton>
         </div>
+        <div className="searchInput">
+          <SearchIcon className="searchIcon" />
+          <InputBase placeholder="Search..." />
+        </div>
+        <IconButton
+          color="inherit"
+          aria-controls="profile-menu"
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          className="profileSection"
+        >
+          <Avatar>
+            <AccountCircleIcon />
+          </Avatar>
+          <div className="username">
+            <Typography variant="subtitle1">John Doe</Typography>
+            <Typography variant="caption" style={{ fontSize: '12px' }}>
+              admin
+            </Typography>
+          </div>
+        </IconButton>
+        <Menu
+          id="profile-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleProfileMenuClose}
+          className="profileMenu"
+        >
+          {profileMenuOptions.map((option, index) => (
+            <MenuItem key={index} onClick={option.onClick}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Menu>
+        <IconButton color="inherit" aria-label="settings" className="settingsButton">
+          <SettingsIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

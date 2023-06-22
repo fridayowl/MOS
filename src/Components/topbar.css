@@ -1,0 +1,107 @@
+/* topbar.css */
+
+/* Main container */
+.topbar {
+  display: flex;
+  align-items: center;
+}
+
+/* Toolbar customization */
+.toolbar {
+  background-color: var(--toolbar-background-color);
+  font-size: var(--toolbar-font-size);
+}
+
+/* Menu button customization */
+.menuButton {
+  transform-origin: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.menuButton.rotated {
+  transform: rotate(90deg);
+}
+
+/* Search input customization */
+.searchInput {
+  background-color: var(--search-input-background-color);
+  border-radius: var(--search-input-border-radius);
+  display: flex;
+  align-items: center;
+  padding-left: var(--search-input-padding-left);
+  margin-right: var(--search-input-margin-right);
+}
+
+.searchInput .searchIcon {
+  margin-right: var(--search-icon-margin-right);
+}
+
+/* Profile section customization */
+.profileSection {
+  display: flex;
+  align-items: center;
+  margin-left: var(--profile-section-margin-left);
+}
+
+.profileSection:hover .avatar {
+  /* Add hover styles for avatar */
+}
+
+.profileSection:hover .username {
+  /* Add hover styles for username */
+}
+
+.profileSection:hover .admin {
+  /* Add hover styles for admin */
+}
+
+.profileSection .username {
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--username-margin-left);
+}
+
+/* Profile menu customization */
+.profileMenu {
+  z-index: 1;
+}
+
+/* Settings button customization */
+.settingsButton {
+  margin-left: var(--settings-button-margin-left);
+}
+
+/* Customizable variables */
+:root {
+  --toolbar-background-color: #f2f2f2;
+  --toolbar-font-size: 14px;
+
+  --search-input-background-color: rgba(0, 0, 0, 0.15);
+  --search-input-border-radius: 4px;
+  --search-input-padding-left: 8px;
+  --search-input-margin-right: 8px;
+
+  --search-icon-margin-right: 8px;
+
+  --profile-section-margin-left: 8px;
+  --username-margin-left: 8px;
+
+  --settings-button-margin-left: 8px;
+}
+
+/* Hover effects */
+.topbar:hover .toolbar {
+  background-color: var(--toolbar-hover-background-color);
+}
+
+.topbar:hover .menuButton {
+  /* Add hover styles for menu button */
+}
+
+.topbar:hover .searchInput {
+  /* Add hover styles for search input */
+}
+
+.topbar:hover .settingsButton {
+  /* Add hover styles for settings button */
+}
