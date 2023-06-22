@@ -55,6 +55,7 @@ const SideBar = ({ data }) => {
         <div className="sidebar-items">{renderSidebarItems()}</div>
       </div>
     </div>
+   
   );
 };
 

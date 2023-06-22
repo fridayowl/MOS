@@ -189,10 +189,10 @@ const HR_ExpTest = () => {
       <h1>Risk Table</h1> 
       
         <HR_RiskTable risk={risks} />
-        {/* <RiskStatusDistributionChart risks={risks}  />
+        <RiskStatusDistributionChart risks={risks}  />
         <RiskDomainAnalysis risks={risks}  /> 
         <RiskAssessmentMetrics  risks={risks}  />
-        <RiskMonitoringMetricsChart risks={risks}  /> */}
+        <RiskMonitoringMetricsChart risks={risks}  />
     </div> 
   );
 }

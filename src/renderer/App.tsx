@@ -8,6 +8,7 @@ import Table from 'Components/HR_freezetable';
  import DatePickerButton from 'Components/Datepicker'
  import TextEditor from 'Components/TextEditor' 
  import SideBar from 'Components/SideBar'
+ import Homepage from  'Components/Homepage'
 
 export default function App() {
   const sidebarData = [
@@ -21,7 +22,8 @@ export default function App() {
     <Router>
       <Routes>
         {/* <Route path="/" element={ <SideBar data={sidebarData} />} /> */}
-        <Route path="/" element={ <HR_ExpTest/>} />
+        {/* <Route path="/" element={ <HR_ExpTest/>} /> */}
+        <Route path="/" element={ <Homepage/>} />
       </Routes>
     </Router>
   );

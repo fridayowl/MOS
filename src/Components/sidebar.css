@@ -18,8 +18,8 @@
   transition: all 0.3s ease-in-out;
   height: 100vh;
   overflow-y: hidden;
-  border-top-right-radius: 17px;
-  border-bottom-right-radius: 43px;
+  /* border-top-right-radius: 17px;
+  border-bottom-right-radius: 43px; */
   color:aliceblue;
 }
 
@@ -77,3 +77,6 @@
   background-color: green;
   color: white;
 }
+
+
+ 
